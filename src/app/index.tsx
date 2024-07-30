@@ -1,7 +1,10 @@
-import { Redirect } from "expo-router";
+import TaskManagerProvider from "../components/CityManage";
+import MainPage from "./screens/MainPage";
 
-export default function GoToScreen() {
-    return(
-        <Redirect href='./(tabs)/WeatherList'/>
+export default function Home() {
+    return (
+        <TaskManagerProvider>
+            <MainPage />
+        </TaskManagerProvider>
     )
 }
