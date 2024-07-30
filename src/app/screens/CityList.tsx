@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, FlatList, Image } from "react-native";
 import { CityListContext } from "../../components/CityManage";
 
-const API_KEY = process.env.OPENWEATHER_API_KEY
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 export default function CityList() {
     const { cities, setCities } = useContext(CityListContext);
     const [weatherDataList, setWeatherDataList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const fetchWeatherData = async (cityName) => {
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
@@ -34,6 +35,7 @@ export default function CityList() {
                 return true;
             });
             setWeatherDataList(validWeatherData);
+            setLoading(false);
         };
 
         fetchAllWeatherData();
@@ -56,11 +58,17 @@ export default function CityList() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList
-                data={cities}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-            />
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <Text style={styles.loadingText}>Loading...</Text>
+                </View>
+            ) : (
+                <FlatList
+                    data={cities}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                />
+            )}
         </SafeAreaView>
     );
 }
@@ -69,6 +77,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        fontSize: 20,
+        color: 'gray',
     },
     item: {
         backgroundColor: 'gray',
