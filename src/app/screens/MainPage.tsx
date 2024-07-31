@@ -9,6 +9,7 @@ import { Button } from "@rneui/base";
 
 
 
+
 const MainPage = () => {
 
     const { cities } = useContext(CityListContext);
@@ -23,18 +24,21 @@ const MainPage = () => {
                 <View style={{alignItems: 'center', paddingTop: 653}}>
                     {cities.length === 0 ?
                     (null):
-                (<Button title='City List' style={{ width: '30%', }} onPress={() => setAddNewCity(false)}/>)
+                (<Button title='City List' buttonStyle={{ backgroundColor: 'gray' }} onPress={() => setAddNewCity(false)}/>)
                     }
                 </View>
                 </View>
             ) : (
                 <View style={{flex: 1, alignItems: 'center',}}>
                 <CityList />
-                <Button title='Add City' onPress={() => setAddNewCity(true)}/>
+                <Button buttonStyle={{ backgroundColor: 'gray', marginTop: 10}} title='Add City' onPress={() => setAddNewCity(true)}/>
                 </View>
             )
         }
         </View>
     )
+
+
+
 }
 export default MainPage;
